@@ -73,7 +73,7 @@ class Runnable(Service):
 
         either = [
             self._task,
-            self._event_on_ready.wait()
+            aio.create_task(self._event_on_ready.wait())
         ]
 
         await aio.wait(either, return_when=aio.FIRST_COMPLETED)
