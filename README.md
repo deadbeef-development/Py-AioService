@@ -1,8 +1,15 @@
-To install, run `python3 -m pip install "git+https://github.com/deadbeef-development/Py-AioService.git@v0"`.
+# Installation
+This can be installed using pip:
+```bash
+python3 -m pip install "git+https://github.com/deadbeef-development/Py-AioService.git@v0"
+```
 
-You can also add the following to your requirements file:
-`git+https://github.com/deadbeef-development/Py-AioService.git@v0`
+You can also use a requirements file:
+```text
+git+https://github.com/deadbeef-development/Py-AioService.git@v0
+```
 
+# Usage
 Example usage of `aiosvc.Service`:
 ```python
 import asyncio as aio
