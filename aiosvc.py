@@ -58,6 +58,8 @@ class Service:
 
 class Runnable(Service):
     def __init__(self, run: Callable[[aio.Event, aio.Event], Awaitable] = None):
+        super().__init__()
+
         if run is not None:
             self.run = run
         
