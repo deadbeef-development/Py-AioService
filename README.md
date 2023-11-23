@@ -42,18 +42,25 @@ Example usage of `aiosvc.Runnable`:
 import asyncio as aio
 import aiosvc
 
-async def my_service(on_ready, on_stop):
-    print("Preparing...")
-    await aio.sleep(1)
-    on_ready.set()
-    print("Ready")
+async def my_service(on_ready):
+    try:
+        print("Preparing...")
 
-    await on_stop.wait()
-    print("Shutting down...")
-    await aio.sleep(1)
-    print("Done.")
+        await aio.sleep(1)
+        on_ready.set()
 
-    return
+        print("Ready")
+        
+        # Perform main task
+        await aio.sleep(1000)
+    finally:
+        print("Shutting down...")
+
+        await aio.sleep(1)
+        
+        print("Done.")
+
+        return
 
 async def main():
     svc1 = aiosvc.Runnable(my_service)
