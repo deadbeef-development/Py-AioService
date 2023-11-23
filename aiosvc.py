@@ -35,9 +35,9 @@ class Service:
             if self._started:
                 raise RuntimeError("Service has already started")
 
-            await self.on_start()
-
             self._started = True
+        
+        await self.on_start()
     
     async def stop(self):
         async with self._lock:
@@ -47,10 +47,9 @@ class Service:
             if self._done:
                 raise RuntimeError("Service has already stopped")
 
-            try:
-                await self.on_stop()
-            finally:
-                self._done = True
+            self._done = True
+        
+        await self.on_stop()
     
     async def on_start(self): ...
     
