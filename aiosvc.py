@@ -64,12 +64,10 @@ class Runnable(Service):
             self.run = run
         
         self._event_on_ready = aio.Event()
-        self._event_on_stop = aio.Event()
-
         self._task: aio.Task = None
         
     async def on_start(self):
-        self._task = aio.create_task(self.run(self._event_on_ready, self._event_on_stop))
+        self._task = aio.create_task(self.run(self._event_on_ready))
 
         either = [
             self._task,
@@ -79,8 +77,8 @@ class Runnable(Service):
         await aio.wait(either, return_when=aio.FIRST_COMPLETED)
     
     async def on_stop(self):
-        self._event_on_stop.set()
+        self._task.cancel()
         await self._task
     
-    async def run(self, on_ready: aio.Event, on_stop: aio.Event): ...
+    async def run(self, on_ready: aio.Event): ...
 
